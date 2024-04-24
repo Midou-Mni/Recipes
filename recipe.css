@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+*{padding: 0;margin: 0;font-family : 'Poppins', sans-serif;}
+body{
+    padding: 0;margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+}
+
+.searchArea{
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(132, 0, 255);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+    #hSearch{
+        width: 80%;
+        text-align: left;
+        padding-left: 2%;
+        margin-bottom: 7%;
+        font-size: x-large;
+        font-weight: 500;
+    }
+    #divSearch{
+        display: flex;
+        width: 80%;
+        height: 7%;
+    }
+        #inptSearch{
+            width: 88%;
+            margin: 0px;
+            padding-left: 2%;
+            border: none;
+            color: rgb(89, 0, 255);
+        }
+            #inptSearch:focus{
+                outline: none;
+            }
+        #btnSearch{
+            width: 12%;
+            padding: 0% 2%;
+            margin: 0px;
+            background-color: white;
+            border: none;
+        }
+            #btnSearch:hover{
+                background-color: rgb(184, 107, 255);
+                cursor: pointer;
+            }
+            #btnSearch:active{
+                background-color: rgb(157, 51, 255);
+            }
+        #imgSearch{
+            width: 100%;
+            height: 100%;
+        }
+
+
+.resultArea {
+    width: 100%;
+    height: 100vh; /* Set a fixed height */
+    display: flex;
+    align-items: flex-start;
+    align-content: space-around;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-y: auto; /* Add vertical scrollbar */
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: min-content;
+    height: min-content;
+    padding: 30px;
+    margin: 10px;
+    border: 1px solid rgb(132, 0, 255);
+    border-radius: 1000px;
+    box-shadow: 1px 1px 15px;
+    transition: transform .5s ease;
+}
+.card:hover{
+    transform: scale(.95); 
+}
+    .divimg{
+        width: 190px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        margin: 15px 30px;
+    }
+    .resultimg{
+        width: 80%;
+        border-radius: 14px;
+    }
+    .title{
+        font-size: x-large;
+        margin: 0px;
+        padding: 0px;
+    }
+    .btnRecipe{
+        padding: 1.5% 9%;
+        border: none;
+        border-radius: 100px;
+        background-color: rgb(132, 0, 255);
+        color: white;
+        font-size: medium;
+        text-decoration: none;
+    }
+    .btnRecipe:hover{
+        background-color: rgb(184, 107, 255);
+        cursor: pointer;
+    }
+    .btnRecipe:active{
+        background-color: rgb(167, 72, 255);        
+    }
+
+.showDetails{
+    display: none;
+}
+.recipeDetails{
+    width: 50%;
+    height: 100vh;
+    text-align: left;
+    background-color: rgb(132, 0, 255);
+    color: white;
+    position: absolute;
+    transform: translate(-50%, 0%);
+}
+.btnDetails{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.btnDetails:hover{
+    cursor: pointer;
+}
+.imgDetails{
+    width: 30px;
+}
+.divRecipe{
+    padding: 5%;
+    font-size: larger;
+    font-weight: 200;
+}
+.aDetails{
+    font-weight: 800;
+    text-decoration: none;
+    color: white;
+    background-color: rgb(184, 107, 255);
+    border-radius: 50px;
+    padding: 5px 15px;
+}
+.aDetails:hover{
+    cursor: pointer;
+    background-color: rgb(164, 68, 253);
+}
