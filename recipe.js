@@ -1,98 +1,76 @@
-// VARIABLES
-let inptSearchEl = document.querySelector('#inptSearch');
-let btnSearchEl = document.querySelector('#btnSearch');
-let resultAreaEl = document.querySelector('.resultArea');
-let btnRecipeEl = document.querySelector('.btnRecipe');
-let recipeDetailsEl = document.querySelector('.recipeDetails');
+// ELEMENTS
+const inptSearchEl = document.querySelector('#inptSearch');
+const btnSearchEl = document.querySelector('#btnSearch');
+const resultAreaEl = document.querySelector('.resultArea');
+const recipeDetailsEl = document.querySelector('.recipeDetails');
 
-//EVENTS
-btnSearchEl.addEventListener('click', clickSearch);
-resultAreaEl.addEventListener('click', clickGet);
-recipeDetailsEl.addEventListener('click', closeDetails);
+// EVENTS
+btnSearchEl.addEventListener('click', () => {
+  const query = inptSearchEl.value.trim();
+  if (query) fetchRecipes(query);
+});
 
-//FUNCTIONS
-function clickSearch(){
-    let inptValue = inptSearchEl.value.trim();
-    let apiUrl = `https://www.themealdb.com/api/json/v2/1/search.php?s=${inptValue}`;
+resultAreaEl.addEventListener('click', (e) => {
+  if (e.target.classList.contains('btnRecipe')) {
+    const id = e.target.getAttribute('data-id');
+    fetchRecipeDetails(id);
+  }
+});
 
-    fetch(apiUrl)
-        .then((res)=>{
-            if(res.ok){
-                return res.json();
-            }
-        })
-        .then((data)=>{
-            // console.log(data);
-            displayRecipes(data);
-        })
+recipeDetailsEl.addEventListener('click', (e) => {
+  if (e.target.closest('.btnDetails')) {
+    recipeDetailsEl.classList.remove('showDetails');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchRecipes('');
+});
+
+// FUNCTIONS
+function fetchRecipes(query) {
+  fetch(`https://www.themealdb.com/api/json/v2/1/search.php?s=${query}`)
+    .then(res => res.ok && res.json())
+    .then(data => displayRecipes(data));
 }
 
-function displayRecipes(dataRecipe){
-    resultAreaEl.innerHTML = "";
+function displayRecipes(data) {
+  resultAreaEl.innerHTML = '';
+  if (!data.meals) {
+    resultAreaEl.innerHTML = '<p>No recipes found.</p>';
+    return;
+  }
 
-    if(dataRecipe.meals === null){
-        resultAreaEl.innerHTML = "No recipes for this choice";
-        return;
-    }
-
-    const recipesHtml = dataRecipe.meals.map((recipe)=>
-        `
-            <div class="card">
-                <div class="divimg">
-                        <img class="resultimg" src="${recipe.strMealThumb}">
-                </div>
-                <h1 class="title">${recipe.strMeal}</h1>
-                <button class="btnRecipe" data-id=${recipe.idMeal}>Get Recipe</button>
-            </div>
-        `
-    );
-    resultAreaEl.innerHTML += recipesHtml.join('');
+  data.meals.forEach(meal => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+      <h1>${meal.strMeal}</h1>
+      <button class="btnRecipe" data-id="${meal.idMeal}">View Recipe</button>
+    `;
+    resultAreaEl.appendChild(card);
+  });
 }
 
-function clickGet(event){
-    if(event.target.classList.contains('btnRecipe')){
-        let a = document.querySelector('.recipeDetails');
-        a.classList.remove('showDetails');
-        let id = event.target.getAttribute('data-id');
-        let  apiUrl2 = `https://www.themealdb.com/api/json/v2/1/lookup.php?i=${id}`;
-
-        fetch(apiUrl2)
-            .then((res)=>{
-                if(res.ok){
-                    return res.json();
-                }
-            })
-            .then((data)=>{
-                // console.log(data);
-                displayDetails(data);
-            })
-    }
-}
-    
-function displayDetails(item){
-    // console.log(item);
-    recipeDetailsEl.innerHTML = "";
-    item.meals.forEach((line)=> {
-        recipeDetailsEl.innerHTML += `
-            <div class="divRecipe">
-                <button class="btnDetails">
-                    <img class="imgDetails" src="bx-caret-left-square.svg">
-                </button>
-                <h2>${line.strMeal}</h2>
-                <img class="detailsImg" src="${line.strMealThumb}">
-                <h4>Instructions: </h4>
-                <span class="spanDetails">
-                    ${line.strInstructions}
-                </span><br><br>
-                <a class="aDetails" href="${line.strYoutube}">Watch video</a>
-            </div>
-        `;
-    })
+function fetchRecipeDetails(id) {
+  fetch(`https://www.themealdb.com/api/json/v2/1/lookup.php?i=${id}`)
+    .then(res => res.ok && res.json())
+    .then(data => showRecipeDetails(data.meals[0]));
 }
 
-function closeDetails(a){
-    if(a.target.classList.contains('btnDetails')){
-        let b = document.querySelector('.recipeDetails');
-        b.classList.add('showDetails');
-    }
+function showRecipeDetails(meal) {
+  recipeDetailsEl.innerHTML = `
+    <button class="btnDetails" title="Close">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+        <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+      </svg>
+    </button>
+    <h2>${meal.strMeal}</h2>
+    <img class="detailsImg" src="${meal.strMealThumb}" alt="${meal.strMeal}">
+    <h4>Instructions:</h4>
+    <span class="spanDetails">${meal.strInstructions}</span>
+    <a class="aDetails" href="${meal.strYoutube}" target="_blank" rel="noopener noreferrer">Watch Video</a>
+  `;
+  recipeDetailsEl.classList.add('showDetails');
 }
