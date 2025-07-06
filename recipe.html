@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe</title>
-    <link rel="stylesheet" href="recipe.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Recipe App</title>
+  <link rel="stylesheet" href="recipe.css" />
 </head>
 <body>
-    <div class="searchArea">
-            <h1 id="title">WebSite By Midou</h1>
-            <section id="secSearch">
-                    <h2 id="hSearch">Find Recipes</h2>
-                    <div id="divSearch">
-                            <input type="search" id="inptSearch" placeholder="Search">
-                            <button id="btnSearch">
-                                    <img id="imgSearch" src="bx-search-alt-2.svg">
-                            </button>
-                    </div>
-            </section>
+  <header class="navbar">
+    <h1 class="logo">🍽️ Midou Recipes</h1>
+    <div class="search-group">
+      <input type="search" id="inptSearch" placeholder="Search for meals..." />
+      <button id="btnSearch" title="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M10 2a8 8 0 105.29 14.29l4.71 4.7 1.41-1.41-4.7-4.71A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z" fill="currentColor"/>
+        </svg>
+      </button>
     </div>
-    <div class="resultArea">
-    </div>
+  </header>
 
-    <div class="recipeDetails showDetails">
-    </div>
+  <main class="resultArea"></main>
 
-    <script src="recipe.js"></script>
+  <aside class="recipeDetails"></aside>
+
+  <script src="recipe.js"></script>
 </body>
 </html>
